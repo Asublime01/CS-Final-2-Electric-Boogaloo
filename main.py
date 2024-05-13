@@ -275,9 +275,38 @@ class Computer:
         for i in range(10):
             addlist = []
             for n in range(10):
-                addlist.append(0)
+                addlist.append(".")
             array.append(addlist)
         return array
+    def SetupBoard(self, computerArray):
+        ships  = []
+        size = 10
+        ship_sizes = [5, 4, 3, 3, 2]
+        for ship_size in ship_sizes:
+            while True:
+                orientation = random.choice(['horizontal', 'vertical'])  # Random orientation
+
+                if orientation == 'horizontal':
+                    x = random.randint(0, size - 1)
+                    y = random.randint(0, size - ship_size)
+                    positions = [(x, y+i) for i in range(ship_size)]
+                else:
+                    x = random.randint(0, size - ship_size)
+                    y = random.randint(0, size - 1)
+                    positions = [(x+i, y) for i in range(ship_size)]
+
+                # Check if ship overlaps with existing ships
+                overlap = any(pos in ships for pos in positions)
+
+                # If no overlap, add ship to board and ships list
+                if not overlap:
+                    ships.extend(positions)
+                    for pos in positions:
+                        computerArray[pos[0]][pos[1]] = 'X'
+                    break
+
+        return computerArray
+
 
 run = True
 
@@ -300,4 +329,9 @@ while run:
     player_board = playerObject.SetupBoard(player_board)
     print("Final Board:\n")
     displayObject.DisplayBoard(player_board)
+    print("Computer Board:\n")
+    computer_board = computerObject.SetupBoard(computer_board)
+    displayObject.DisplayBoard(computer_board)
+
+
     break
