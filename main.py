@@ -318,9 +318,42 @@ computer_board = []
 
 player_board = playerObject.GenerateBoard()
 computer_board = computerObject.GenerateBoard()
+guess_board = playerObject.GenerateBoard()
 
+def Game(player_board, computer_board, guess_board):
+    playerTurn = True
+    computerTurn = False
+    cGuesses = []
+    cGuessConfirmed = False
+    while True:
+          if playerTurn:
+              playerGuess = input("What will your guess be? (row-col): ")
+              row, column = playerGuess.split("-")
+              row, column = int(row), int(column)
+              if computer_board[row][column] == "X":
+                  guess_board[row][column] == "X"
+              else:
+                  guess_board[row][column] == "m"
+          elif computerTurn:
+              while True:
+                computer_guessRow = random.randint(0, 9)
+                computer_guessCol = random.randing(0, 9)
+                for guessPair in cGuesses:
+                    if guessPair == [computer_guessRow, computer_guessCol]:
+                        cGuessConfirmed = False
+                        break
+                    else:
+                        cGuessConfirmed = True
+                        continue
+                if cGuessConfirmed:
+                    cGuesses.append([computer_guessRow, computer_guessCol])
+                    break
+                else:
+                    continue
+                
 
-    
+            
+        
     
 
 while run:
