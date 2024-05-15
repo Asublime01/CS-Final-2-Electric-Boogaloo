@@ -364,11 +364,23 @@ pDestroyerSunk = False
 playerWon = False
 computerWon = False
 
+Cnum = 5
+Bnum = 4
+cnum = 3
+Snum = 3
+Dnum = 2
+
+_Cnum = 5
+_Bnum = 4
+_cnum = 3
+_Snum = 3
+_Dnum = 2
 
 
 
 while True:
     if playerTurn:
+        displayObject.DisplayBoard(computer_board)
         playerGuess = input("What will your guess be? (row-col): ")
         row, column = playerGuess.split("-")
         row, column = int(row), int(column)
@@ -376,58 +388,41 @@ while True:
         column -= 1
         if computer_board[row][column] in ships:
             guess_board[row][column] = "X"
-            computer_board[row][column] = "X"
             print("Player HIT!")
-            if computer_board[row][column] == "C":
-                shipCount = 0
-                for row in computer_board:
-                    for value in row:
-                        if value == "C":
-                            shipCount += 1
-                if shipCount == 0:
-                    cCarrierSunk = True
-                    print("You Sunk the Computer's Carrier!")
-            elif computer_board[row][column] == "c":
-                shipCount = 0
-                for row in computer_board:
-                    for value in row:
-                        if value == "c":
-                            shipCount += 1
-                if shipCount == 0:
-                    cCruiserSunk = True
-                    print("You Sunk the Computer's Cruiser!")
-            elif computer_board[row][column] == "S":
-                shipCount = 0
-                for row in computer_board:
-                    for value in row:
-                        if value == "S":
-                            shipCount += 1
-                if shipCount == 0:
-                    cSubmarineSunk = True
-                    print("You Sunk the Computer's Submarine!")
-            elif computer_board[row][column] == "B":
-                shipCount = 0
-                for row in computer_board:
-                    for value in row:
-                        if value == "B":
-                            shipCount += 1
-                if shipCount == 0:
-                    cBattleshipSunk = True
-                    print("You Sunk the Computer's Battleship!")
-            elif computer_board[row][column] == "D":
-                shipCount = 0
-                for row in computer_board:
-                    for value in row:
-                        if value == "D":
-                            shipCount += 1
-                if shipCount == 0:
-                    cDestroyerSunk = True
-                    print("You Sunk the Computer's Destroyer!")
-            elif cDestroyerSunk and cCarrierSunk and cCruiserSunk and cSubmarineSunk and cBattleshipSunk:
+            pGuess = computer_board[row][column]
+            if pGuess == "C":
+                Cnum -= 1
+                if Cnum == 0:
+                    print("You Sunk the 'Carrier'!")
+            elif pGuess == "B":
+                Bnum -= 1
+                if Bnum == 0:
+                    print("You Sunk the 'Battleship'!")
+            elif pGuess == "c":
+                cnum -= 1
+                if cnum == 0:
+                    print("You Sunk the 'Cruiser'!")
+            elif pGuess == "S":
+                Snum -= 1
+                if Snum == 0:
+                    print("You Sunk the 'Submarine'!")
+            elif pGuess == "D":
+                Dnum -= 1
+                if Dnum == 0:
+                    print("You Sunk the 'Destroyer'!")
+            if Cnum == 0 and cnum == 0 and Bnum == 0 and Snum == 0 and Dnum == 0:
                 playerWon = True
+                print("Congratulations!!!! You Won!!!!!")
+            computer_board[row][column] = "X"
+            if cDestroyerSunk and cCarrierSunk and cCruiserSunk and cSubmarineSunk and cBattleshipSunk:
+                playerWon = True
+                playerTurn = False
+                computerTurn = False
             playerTurn = False
             computerTurn = True
             displayObject.DisplayBoard(guess_board)
+            continue
+            
             
                 
                 
@@ -448,36 +443,33 @@ while True:
                 cGuesses.append([computer_guessRow, computer_guessCol])
 
                 if player_board[computer_guessRow][computer_guessCol] in ['C', 'B', 'c', 'S', 'D']:
-                    player_board[computer_guessRow][computer_guessCol] = 'X'
                     print("Computer HIT!")
-
-                    # Update player's ship sunk status
-                    if player_board[computer_guessRow][computer_guessCol] == "C":
-                        shipCount = sum(row.count("C") for row in player_board)
-                        if shipCount == 0:
-                            pCarrierSunk = True
-                            print("Computer Sunk your Carrier!")
-                    elif player_board[computer_guessRow][computer_guessCol] == "c":
-                        shipCount = sum(row.count("c") for row in player_board)
-                        if shipCount == 0:
-                            pCruiserSunk = True
-                            print("Computer Sunk your Cruiser!")
-                    elif player_board[computer_guessRow][computer_guessCol] == "S":
-                        shipCount = sum(row.count("S") for row in player_board)
-                        if shipCount == 0:
-                            pSubmarineSunk = True
-                            print("Computer Sunk your Submarine!")
-                    elif player_board[computer_guessRow][computer_guessCol] == "B":
-                        shipCount = sum(row.count("B") for row in player_board)
-                        if shipCount == 0:
-                            pBattleshipSunk = True
-                            print("Computer Sunk your Battleship!")
-                    elif player_board[computer_guessRow][computer_guessCol] == "D":
-                        shipCount = sum(row.count("D") for row in player_board)
-                        if shipCount == 0:
-                            pDestroyerSunk = True
-                            print("Computer Sunk your Destroyer!")
-
+                    cGuess = player_board[computer_guessRow][computer_guessCol]
+                    if cGuess == "C":
+                        _Cnum -= 1
+                        if _Cnum == 0:
+                            print("The Computer Sunk Your Carrier!")
+                    elif cGuess == "c":
+                        _cnum -= 1
+                        if _cnum == 0:
+                            print("The Computer Sunk Your Cruiser!")
+                    elif cGuess == "B":
+                        _Bnum -= 1
+                        if _Bnum == 0:
+                            print("The Computer Sunk Your Battleship!")
+                    elif cGuess == "S":
+                        _Snum -= 1
+                        if _Snum == 0:
+                            print("The Computer Sunk Your Submarine!")
+                    elif cGuess == "D":
+                        _Dnum -= 1
+                        if _Dnum == 0:
+                            print("The Computer Sunk Your Destroyer!")
+                    if _Cnum == 0 and _cnum == 0 and _Snum == 0 and _Dnum == 0 and _Bnum == 0:
+                        computerWon = True
+                        computerTurn = False
+                        playerTurn = False
+                    player_board[computer_guessRow][computer_guessCol] = 'X'
                     computerTurn = False
                     playerTurn = True
                     displayObject.DisplayBoard(player_board)
@@ -496,4 +488,3 @@ while True:
         break
     
     
-        
