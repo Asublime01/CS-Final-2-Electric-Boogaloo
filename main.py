@@ -44,11 +44,7 @@ class Player:
 
 
                         playerArray[row] = rowToChange
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         carrierset = True
                         break
 
@@ -56,11 +52,7 @@ class Player:
                         for i in range(5):
                             playerArray[row][column] = "C"
                             row += 1
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         carrierset = True
                         break
 
@@ -90,11 +82,7 @@ class Player:
 
 
                         playerArray[row] = rowToChange
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         battleshipset = True
                         break
 
@@ -102,11 +90,7 @@ class Player:
                         for i in range(4):
                             playerArray[row][column] = "B"
                             row += 1
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         battleshipset = True
                         break
                     
@@ -135,11 +119,7 @@ class Player:
 
 
                         playerArray[row] = rowToChange
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         cruiserset = True
                         break
 
@@ -147,11 +127,7 @@ class Player:
                         for i in range(3):
                             playerArray[row][column] = "c"
                             row += 1
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         cruiserset = True
                         break
                     
@@ -181,11 +157,7 @@ class Player:
 
 
                         playerArray[row] = rowToChange
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         submarineset = True
                         break
 
@@ -193,11 +165,7 @@ class Player:
                         for i in range(3):
                             playerArray[row][column] = "S"
                             row += 1
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         submarineset = True
                         break
                     
@@ -226,11 +194,7 @@ class Player:
 
 
                         playerArray[row] = rowToChange
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         destroyerset = True
                         break
 
@@ -238,11 +202,7 @@ class Player:
                         for i in range(2):
                             playerArray[row][column] = "D"
                             row += 1
-                        for row in playerArray:
-                            for col in row:
-                                print(col, end=" ")
-                            print()
-                        print()
+                        displayObject.DisplayBoard(playerArray)
                         destroyerset = True
                         break
                     
@@ -260,11 +220,22 @@ class Player:
 
 class Display:
     def DisplayBoard(self, array):
-        for row in array:
-            for col in row:
+        # Print column labels (letters A-J)
+        
+        # Print rows with row number and content
+        for i in range(len(array)):
+            print(f"{i+1:2}|", end=" ")  # Row number
+            for col in array[i]:
                 print(col, end=" ")
-            print()
-        print()
+            print()  # Newline
+
+        # Print row labels (numbers 1-10)
+        print("  ", end=" ")  # Space for alignment
+        for i in range(1, 11):
+            print(i, end=" ")
+        print()  # Newline
+        print()  # Extra newline for spacing
+
         
 
 class Computer:
@@ -380,7 +351,6 @@ _Dnum = 2
 
 while True:
     if playerTurn:
-        displayObject.DisplayBoard(computer_board)
         playerGuess = input("What will your guess be? (row-col): ")
         row, column = playerGuess.split("-")
         row, column = int(row), int(column)
@@ -466,6 +436,7 @@ while True:
                         if _Dnum == 0:
                             print("The Computer Sunk Your Destroyer!")
                     if _Cnum == 0 and _cnum == 0 and _Snum == 0 and _Dnum == 0 and _Bnum == 0:
+                        print("The Computer Wins The Game!!!")
                         computerWon = True
                         computerTurn = False
                         playerTurn = False
