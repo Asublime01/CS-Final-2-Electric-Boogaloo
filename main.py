@@ -282,7 +282,9 @@ class Computer:
         ships  = []
         size = 10
         ship_sizes = [5, 4, 3, 3, 2]
-        for ship_size in ship_sizes:
+        ship_symbols = ['C', 'B', 'c', 'S', 'D']  # Define symbols for different ships
+
+        for ship_size, ship_symbol in zip(ship_sizes, ship_symbols):
             while True:
                 orientation = random.choice(['horizontal', 'vertical'])  # Random orientation
 
@@ -302,7 +304,7 @@ class Computer:
                 if not overlap:
                     ships.extend(positions)
                     for pos in positions:
-                        computerArray[pos[0]][pos[1]] = 'X'
+                        computerArray[pos[0]][pos[1]] = ship_symbol  # Assign ship symbol
                     break
 
         return computerArray
@@ -320,51 +322,160 @@ player_board = playerObject.GenerateBoard()
 computer_board = computerObject.GenerateBoard()
 guess_board = playerObject.GenerateBoard()
 
-def Game(player_board, computer_board, guess_board):
-    playerTurn = True
-    computerTurn = False
-    cGuesses = []
-    cGuessConfirmed = False
-    while True:
-          if playerTurn:
-              playerGuess = input("What will your guess be? (row-col): ")
-              row, column = playerGuess.split("-")
-              row, column = int(row), int(column)
-              if computer_board[row][column] == "X":
-                  guess_board[row][column] == "X"
-              else:
-                  guess_board[row][column] == "m"
-          elif computerTurn:
-              while True:
-                computer_guessRow = random.randint(0, 9)
-                computer_guessCol = random.randing(0, 9)
-                for guessPair in cGuesses:
-                    if guessPair == [computer_guessRow, computer_guessCol]:
-                        cGuessConfirmed = False
-                        break
-                    else:
-                        cGuessConfirmed = True
-                        continue
-                if cGuessConfirmed:
-                    cGuesses.append([computer_guessRow, computer_guessCol])
-                    break
-                else:
-                    continue
+
+shipSizes = [5, 4, 3, 3, 2]
                 
+
+ships = ['C', 'B', 'c', 'S', 'D']           
 
             
         
     
 
-while run:
-    displayObject.DisplayBoard(player_board)
-
-    player_board = playerObject.SetupBoard(player_board)
-    print("Final Board:\n")
-    displayObject.DisplayBoard(player_board)
-    print("Computer Board:\n")
-    computer_board = computerObject.SetupBoard(computer_board)
-    displayObject.DisplayBoard(computer_board)
+playerTurn = True
+computerTurn = False
+cGuesses = []
+cGuessConfirmed = False
 
 
-    break
+
+displayObject.DisplayBoard(player_board)
+player_board = playerObject.SetupBoard(player_board)
+print("Final Board:\n")
+displayObject.DisplayBoard(player_board)
+print("Computer Board:\n")
+computer_board = computerObject.SetupBoard(computer_board)
+displayObject.DisplayBoard(computer_board)
+
+
+cCarrierSunk = False
+cBattleshipSunk = False
+cCruiserSunk = False
+cSubmarineSunk = False
+cDestroyerSunk = False
+
+
+pCarrierSunk = False
+pBattleshipSunk = False
+pCruiserSunk = False
+pSubmarineSunk = False
+pDestroyerSunk = False
+
+playerWon = False
+computerWon = False
+
+
+
+
+while True:
+    if playerTurn:
+        playerGuess = input("What will your guess be? (row-col): ")
+        row, column = playerGuess.split("-")
+        row, column = int(row), int(column)
+        row -= 1
+        column -= 1
+        if computer_board[row][column] in ships:
+            guess_board[row][column] == "X"
+            computer_board[row][column] == "X"
+            print("Player HIT!")
+            if computer_board[row][column] == "C":
+                shipCount = 0
+                for row in computer_board:
+                    for value in row:
+                        if value == "C":
+                            shipCount += 1
+                if shipCount == 0:
+                    cCarrierSunk = True
+                    print("You Sunk the Computer's Carrier!")
+            elif computer_board[row][column] == "c":
+                shipCount = 0
+                for row in computer_board:
+                    for value in row:
+                        if value == "c":
+                            shipCount += 1
+                if shipCount == 0:
+                    cCruiserSunk = True
+                    print("You Sunk the Computer's Cruiser!")
+            elif computer_board[row][column] == "S":
+                shipCount = 0
+                for row in computer_board:
+                    for value in row:
+                        if value == "S":
+                            shipCount += 1
+                if shipCount == 0:
+                    cSubmarineSunk = True
+                    print("You Sunk the Computer's Submarine!")
+            elif computer_board[row][column] == "B":
+                shipCount = 0
+                for row in computer_board:
+                    for value in row:
+                        if value == "B":
+                            shipCount += 1
+                if shipCount == 0:
+                    cBattleshipSunk = True
+                    print("You Sunk the Computer's Battleship!")
+            elif computer_board[row][column] == "D":
+                shipCount = 0
+                for row in computer_board:
+                    for value in row:
+                        if value == "D":
+                            shipCount += 1
+                if shipCount == 0:
+                    cDestroyerSunk = True
+                    print("You Sunk the Computer's Destroyer!")
+            elif cDestroyerSunk and cCarrierSunk and cCruiserSunk and cSubmarineSunk and cBattleshipSunk:
+                playerWon = True
+            playerTurn = False
+            computerTurn = True
+            
+                
+                
+
+        else:
+            guess_board[row][column] == "m"
+            print("You missed!!")
+            playerTurn = False
+            computerTurn = True
+
+       
+    elif computerTurn:
+        while True:
+          computer_guessRow = random.randint(0, 9)
+          computer_guessCol = random.randint(0, 9)
+          for guessPair in cGuesses:
+              if guessPair == [computer_guessRow, computer_guessCol]:
+                  cGuessConfirmed = False
+                  break
+              else:
+                  cGuessConfirmed = True
+                  continue
+          if cGuessConfirmed:
+              cGuesses.append([computer_guessRow, computer_guessCol])
+
+              if player_board[computer_guessRow][computer_guessCol] in ['C', 'B', 'c', 'S', 'D']:
+                  player_board[computer_guessRow][computer_guessCol] = 'X'
+                  print(" Computer HIT!")
+                  if player_board[row][column] == "C":
+                      shipcCount = 0
+                      for row in player_board:
+                          for value in row:
+                              if value == "C":
+                                  shipcCount += 1
+                      if shipcCount == 0:
+                          pass
+
+                  computerTurn = False
+                  playerTurn = True
+                 
+              else:
+                  print("Computer Misses!")  
+                  
+          elif playerTurn == True:
+              break    
+          else:
+              continue
+    if computerWon or playerWon:
+        break
+    
+    
+        
