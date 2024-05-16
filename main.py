@@ -1,6 +1,6 @@
 import random
 
-class Player: 
+class Player: #Player Class with board generation and manual board setup
     def __init__(self) -> None:
         pass
     def GenerateBoard(self):
@@ -11,8 +11,8 @@ class Player:
                 addlist.append(".")
             array.append(addlist)
         return array
-    def SetupBoard(self, playerArray):
-    
+    def SetupBoard(self, playerArray): 
+    #Variable Initiation
         lettersKey = {
     'a': 0,
     'b': 1,
@@ -31,7 +31,7 @@ class Player:
         submarineset = False
         destroyerset = False
         
-        while True:
+        while True: #Board Setup Code
             if carrierset == True and battleshipset == True and cruiserset == True and submarineset == True and destroyerset == True:
                 break
         
@@ -231,7 +231,7 @@ class Player:
             
        
             
-
+#Display Class for board display
 class Display:
     def DisplayBoard(self, array):
         # Print column labels (letters A-J)
@@ -255,7 +255,7 @@ class Display:
 
         
 
-class Computer:
+class Computer: #Computer Class With Generate board methods and auto board setup
     def __init__(self) -> None:
         pass
     def GenerateBoard(self):
@@ -299,7 +299,7 @@ class Computer:
 
 
 run = True
-
+###########Variable Initiation ###################
 playerObject = Player()
 computerObject = Computer()
 displayObject = Display()
@@ -376,9 +376,9 @@ lettersKey = {
     'i': 8,
     'j': 9
 }
-
+#Main Game loop
 while True:
-    if playerTurn:
+    if playerTurn: #Player Turn
         playerGuess = input("What will your guess be? (letter-number): ")
         row, column = playerGuess.split("-")
         row = lettersKey[row]
@@ -433,7 +433,7 @@ while True:
             displayObject.DisplayBoard(guess_board)
 
        
-    elif computerTurn:
+    elif computerTurn: #Computer Turn
         while True:
             computer_guessRow = random.randint(0, 9)
             computer_guessCol = random.randint(0, 9)
@@ -483,7 +483,7 @@ while True:
                 continue #Get a new Computer guess
 
 
-    if computerWon or playerWon:
+    if computerWon or playerWon: #End Condition
         break
     
     
