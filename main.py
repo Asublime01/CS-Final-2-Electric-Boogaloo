@@ -12,11 +12,25 @@ class Player:
             array.append(addlist)
         return array
     def SetupBoard(self, playerArray):
+    
+        lettersKey = {
+    'a': 0,
+    'b': 1,
+    'c': 2,
+    'd': 3,
+    'e': 4,
+    'f': 5,
+    'g': 6,
+    'h': 7,
+    'i': 8,
+    'j': 9
+}
         carrierset = False
         battleshipset = False
         cruiserset = False
         submarineset = False
         destroyerset = False
+        
         while True:
             if carrierset == True and battleshipset == True and cruiserset == True and submarineset == True and destroyerset == True:
                 break
@@ -24,13 +38,13 @@ class Player:
             
             if carrierset == False:
                 while True:
-                    pcarrier = input("Please enter the row and column you would like to place your 'Carrier' (row-col): ")
+                    pcarrier = input("Please enter the row and column you would like to place your 'Carrier' (letter-number): ")
                     row, column = pcarrier.split("-")
-                    row, column = int(row), int(column)
+                    row = lettersKey[row]
+                    column = int(column)
                     if row > 10 or column > 10:
                         continue
                     else:
-                        row -= 1
                         column -= 1
                         break
                     
@@ -62,13 +76,13 @@ class Player:
                         continue
             elif battleshipset == False:
                 while True:
-                    pbattle = input("Please enter the row and column you would like to place your 'Battleship' (row-col): ")
+                    pbattle = input("Please enter the row and column you would like to place your 'Battleship' (letter-number): ")
                     row, column = pbattle.split("-")
-                    row, column = int(row), int(column)
+                    row = lettersKey[row]
+                    column = int(column)
                     if row > 10 or column > 10:
                         continue
                     else:
-                        row -= 1
                         column -= 1
                         break
                     
@@ -99,13 +113,13 @@ class Player:
                         continue
             elif cruiserset == False:
                 while True:
-                    pcruise = input("Please enter the row and column you would like to place your 'Cruiser' (row-col): ")
+                    pcruise = input("Please enter the row and column you would like to place your 'Cruiser' (letter-number): ")
                     row, column = pcruise.split("-")
-                    row, column = int(row), int(column)
+                    row = lettersKey[row]
+                    column = int(column)
                     if row > 10 or column > 10:
                         continue
                     else:
-                        row -= 1
                         column -= 1
                         break
                     
@@ -137,13 +151,13 @@ class Player:
             
             elif submarineset == False:
                 while True:
-                    psub = input("Please enter the row and column you would like to place your 'Submarine' (row-col): ")
+                    psub = input("Please enter the row and column you would like to place your 'Submarine' (letter-number): ")
                     row, column = psub.split("-")
-                    row, column = int(row), int(column)
+                    row = lettersKey[row]
+                    column = int(column)
                     if row > 10 or column > 10:
                         continue
                     else:
-                        row -= 1
                         column -= 1
                         break
                     
@@ -174,13 +188,13 @@ class Player:
                         continue
             elif destroyerset == False:
                 while True:
-                    pdes = input("Please enter the row and column you would like to place your 'Destroyer' (row-col): ")
+                    pdes = input("Please enter the row and column you would like to place your 'Destroyer' (letter-number): ")
                     row, column = pdes.split("-")
-                    row, column = int(row), int(column)
+                    row = lettersKey[row]
+                    column = int(column)
                     if row > 10 or column > 10:
                         continue
                     else:
-                        row -= 1
                         column -= 1
                         break
                     
@@ -223,8 +237,11 @@ class Display:
         # Print column labels (letters A-J)
         
         # Print rows with row number and content
+        letters = [chr(97 + i) for i in range(10)]
+
+# Print the grid with letters 'a' to 'j' on the left column
         for i in range(len(array)):
-            print(f"{i+1:2}|", end=" ")  # Row number
+            print(f"{letters[i]:2}|", end=" ")  # Letters 'a' to 'j'
             for col in array[i]:
                 print(col, end=" ")
             print()  # Newline
@@ -347,14 +364,25 @@ _cnum = 3
 _Snum = 3
 _Dnum = 2
 
-
+lettersKey = {
+    'a': 0,
+    'b': 1,
+    'c': 2,
+    'd': 3,
+    'e': 4,
+    'f': 5,
+    'g': 6,
+    'h': 7,
+    'i': 8,
+    'j': 9
+}
 
 while True:
     if playerTurn:
-        playerGuess = input("What will your guess be? (row-col): ")
+        playerGuess = input("What will your guess be? (letter-number): ")
         row, column = playerGuess.split("-")
-        row, column = int(row), int(column)
-        row -= 1
+        row = lettersKey[row]
+        column = int(column)
         column -= 1
         if computer_board[row][column] in ships:
             guess_board[row][column] = "X"
