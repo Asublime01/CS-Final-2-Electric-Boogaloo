@@ -1,3 +1,6 @@
+#Caden Bents Period 3
+#No Help Given or Recieved
+import time
 import random
 
 class Player: #Player Class with board generation and manual board setup
@@ -331,9 +334,13 @@ displayObject.DisplayBoard(player_board)
 player_board = playerObject.SetupBoard(player_board)
 print("Final Board:\n")
 displayObject.DisplayBoard(player_board)
-print("Computer Board:\n")
+
+time.sleep(2)
+for i in range(20):
+    print("\n")
+
 computer_board = computerObject.SetupBoard(computer_board)
-displayObject.DisplayBoard(computer_board)
+
 
 
 cCarrierSunk = False
@@ -376,7 +383,12 @@ lettersKey = {
     'i': 8,
     'j': 9
 }
+cPreviousHit = False
 #Main Game loop
+print("""
+LET THE GAME............ BEGIN!!!!!!!!
+######################################\n\n      
+""")
 while True:
     if playerTurn: #Player Turn
         playerGuess = input("What will your guess be? (letter-number): ")
@@ -435,13 +447,26 @@ while True:
        
     elif computerTurn: #Computer Turn
         while True:
-            computer_guessRow = random.randint(0, 9)
-            computer_guessCol = random.randint(0, 9)
+            if cPreviousHit:
+                RoworCol = random.randint(1, 2)
+                if RoworCol == 1:
+                    computer_guessRow = random.choice([tempRow -1, tempRow + 1])
+                    computer_guessCol = tempCol
+                    print(f"C Row: {computer_guessRow}| C Col: {computer_guessCol}")
+                elif RoworCol == 2:
+                    computer_guessCol = random.choice([tempCol -1, tempCol + 1])
+                    computer_guessRow = tempRow
+                    print(f"C Row: {computer_guessRow}| C Col: {computer_guessCol}")
+            else:
+                computer_guessRow = random.randint(0, 9)
+                computer_guessCol = random.randint(0, 9)
             if [computer_guessRow, computer_guessCol] not in cGuesses:
                 cGuesses.append([computer_guessRow, computer_guessCol])
-
                 if player_board[computer_guessRow][computer_guessCol] in ['C', 'B', 'c', 'S', 'D']:
                     print("Computer HIT!")
+                    tempRow = computer_guessRow
+                    tempCol = computer_guessCol
+                    cPreviousHit = True
                     cGuess = player_board[computer_guessRow][computer_guessCol]
                     if cGuess == "C":
                         _Cnum -= 1
@@ -474,6 +499,7 @@ while True:
                     displayObject.DisplayBoard(player_board)
                 else:
                     print("Computer Misses!")
+                    cPreviousHit = False
                     computerTurn = False
                     playerTurn = True
                 break
