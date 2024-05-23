@@ -3,6 +3,9 @@
 import time
 import random
 
+print("WELCOME TO BATTLESHIP!!!!")
+print("Before we begin..... We must setup your board!\n")
+
 class Player: #Player Class with board generation and manual board setup
     def __init__(self) -> None:
         pass
@@ -39,7 +42,7 @@ class Player: #Player Class with board generation and manual board setup
                 break
         
             
-            if carrierset == False:
+            if carrierset == False: #Carrier set
                 while True:
                     pcarrier = input("Please enter the row and column you would like to place your 'Carrier' (letter-number): ")
                     row, column = pcarrier.split("-")
@@ -77,7 +80,7 @@ class Player: #Player Class with board generation and manual board setup
                     else:
                         print("Please enter a valid response.")
                         continue
-            elif battleshipset == False:
+            elif battleshipset == False: #Battleship set
                 while True:
                     pbattle = input("Please enter the row and column you would like to place your 'Battleship' (letter-number): ")
                     row, column = pbattle.split("-")
@@ -114,7 +117,7 @@ class Player: #Player Class with board generation and manual board setup
                     else:
                         print("Please enter a valid response.")
                         continue
-            elif cruiserset == False:
+            elif cruiserset == False: #Cruiser set
                 while True:
                     pcruise = input("Please enter the row and column you would like to place your 'Cruiser' (letter-number): ")
                     row, column = pcruise.split("-")
@@ -152,7 +155,7 @@ class Player: #Player Class with board generation and manual board setup
                         print("Please enter a valid response.")
                         continue
             
-            elif submarineset == False:
+            elif submarineset == False: #Submarine set
                 while True:
                     psub = input("Please enter the row and column you would like to place your 'Submarine' (letter-number): ")
                     row, column = psub.split("-")
@@ -189,7 +192,7 @@ class Player: #Player Class with board generation and manual board setup
                     else:
                         print("Please enter a valid response.")
                         continue
-            elif destroyerset == False:
+            elif destroyerset == False: #Destroyer set
                 while True:
                     pdes = input("Please enter the row and column you would like to place your 'Destroyer' (letter-number): ")
                     row, column = pdes.split("-")
@@ -452,11 +455,11 @@ while True:
                 if RoworCol == 1:
                     computer_guessRow = random.choice([tempRow -1, tempRow + 1])
                     computer_guessCol = tempCol
-                    print(f"C Row: {computer_guessRow}| C Col: {computer_guessCol}")
+                    
                 elif RoworCol == 2:
                     computer_guessCol = random.choice([tempCol -1, tempCol + 1])
                     computer_guessRow = tempRow
-                    print(f"C Row: {computer_guessRow}| C Col: {computer_guessCol}")
+                    
             else:
                 computer_guessRow = random.randint(0, 9)
                 computer_guessCol = random.randint(0, 9)
